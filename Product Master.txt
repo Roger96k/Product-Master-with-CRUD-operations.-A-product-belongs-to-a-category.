@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace Nimaptest
+{
+    public partial class Form1 : Form
+    {
+
+        SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-KC3I4U8;Initial Catalog=nimap;Integrated Security=True ");
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        
+   
+     //Insert Btn Event
+        private void intbtn_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO product (Product_Id,Product_name,CAtegory_Id) VALUES ('"+pidtext.Text+"','"+pntext.Text+"','"+cidtext.Text+"')", con);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Data Insert");
+            con.Close();
+            showdata();
+            clear();
+
+        }
+
+//Update Btn Event
+
+        private void upbtn_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand(@"UPDATE product SET Product_name='"+pntext.Text+"', category_Id='"+cidtext.Text+"' WHERE Product_Id='"+pidtext.Text+"'",con);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Data Updated");
+            con.Close();
+            showdata();
+            clear();
+
+        }
+           
+       //Delete Btn Event
+        private void delbtn_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("DELETE from product WHERE Product_Id ='" + pidtext.Text + "'", con);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Data Delete");
+            con.Close();
+            showdata();
+            clear();
+        }
+
+      //Clear Btn Event     
+      private void clrbtn_Click(object sender, EventArgs e)
+        {
+            pidtext.Clear();
+            pntext.Clear();
+            cidtext.Clear();
+        }
+
+     
+
+
+
+
+}
